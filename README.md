@@ -90,9 +90,9 @@ plt.show()
   exec(code_obj, self.user_global_ns, self.user_ns)
 ```
 
-![png](file:///home/jordan/Documentos/Teoria da Computação/TP-1/Report/Report/output_1_1.png?msec=1652535069809)
+![png](/Report/Report/output_1_1.png?msec=1652535069809)
 
-![png](file:///home/jordan/Documentos/Teoria da Computação/TP-1/Report/Report/output_1_2.png?msec=1652535069809)
+![png](/Report/Report/output_1_2.png?msec=1652535069809)
 
 ```python
 import time
