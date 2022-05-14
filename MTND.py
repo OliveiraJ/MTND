@@ -104,7 +104,7 @@ def testMT(MT):
     for words in MT.testWords:
         start_time = time.perf_counter()
         MT.readTransitionStack(words, MT.initialState)
-        print("--- %s ms ---" % ((time.perf_counter() - start_time)*1000.0))
+        print(" %s ms" % ((time.perf_counter() - start_time)*1000.0))
 
 
 def createMT():
