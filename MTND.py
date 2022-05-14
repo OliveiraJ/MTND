@@ -1,4 +1,5 @@
 import time
+import json
 
 
 class MTND:
@@ -24,9 +25,9 @@ class MTND:
                 trans[0]+trans[1]: [[trans[2], trans[3], trans[4]]]}
             self.transitions.update(newTransition)
 
-    def readTransitions(self, num):
+    def readTransitions(self, num, data):
         for i in range(0, num):
-            trans = input().split()
+            trans = data["quintuplas"][i].split()
             self.createTransitions(trans)
 
     def write(self, tape, char, register):
@@ -45,16 +46,6 @@ class MTND:
             return register + 1
         elif(direction == 'I'):
             return register
-        # if(direction == 'I'):
-        #     return register
-        # elif(direction == 'E'):
-        #     if(register == 0):
-        #         return register
-        #     return register - 1
-        # elif(direction == 'D'):
-        #     if(len(tape)-1 == register):
-        #         tape.append(self.white)
-        #     return register + 1
 
     def validateTransition(self, currState, tape, register, transitionStack):
         stop = True
@@ -100,25 +91,33 @@ class MTND:
             print('N')
 
 
+def readData():
+    fData = open('data.json')
+    data = json.load(fData)
+    fData.close()
+    return data
+
+
 def testMT(MT):
     for words in MT.testWords:
         start_time = time.perf_counter()
         MT.readTransitionStack(words, MT.initialState)
-        print(" %s ms" % ((time.perf_counter() - start_time)*1000.0))
+        print(" %s" % ((time.perf_counter() - start_time)*1000.0))
 
 
 def createMT():
+    data = readData()
     MT = MTND()
-    MT.states = input()
-    MT.entryAlphabet = input()
-    MT.stackAlphabet = input()
-    MT.leftLimit = input()
-    MT.white = input()
-    numOfTransitiosn = int(input())
-    MT.readTransitions(numOfTransitiosn)
-    MT.initialState = input()
-    MT.finalStates = input().split()
-    MT.testWords = input().split()
+    MT.states = data["estados"]
+    MT.entryAlphabet = data["alfabetoEntrada"]
+    MT.stackAlphabet = data["alfabetoPilha"]
+    MT.leftLimit = data["simboloEsquerda"]
+    MT.white = data["branco"]
+    numOfTransitiosn = int(data["quantTrans"])
+    MT.readTransitions(numOfTransitiosn, data)
+    MT.initialState = data["estadoInicial"]
+    MT.finalStates = data["estadosFinais"].split()
+    MT.testWords = data["palavras"].split()
 
     return MT
 
